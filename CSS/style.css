@@ -1,0 +1,373 @@
+/* =========================
+   DHMO – Clean stylesheet
+   Goal:
+   - Keep BOTH menus small like your FIRST screenshot
+   - Menu 1 fixed top-left, Menu 2 fixed top-right
+   - Hide the empty “rectangle button” (menuToggle)
+   - Keep main text centered and not full-width
+   ========================= */
+
+/* Base reset */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  color: #e9eef2;
+  font-family: "Open Sans", Helvetica, sans-serif;
+  font-size: 15pt;
+  font-weight: 400;
+  letter-spacing: 0.075em;
+  line-height: 1.65em;
+}
+
+/* Links */
+a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: dotted 1px rgba(233,238,242,0.65);
+  transition: border-bottom-color 0.2s ease, opacity 0.2s ease;
+}
+a:hover { border-bottom-color: transparent; opacity: 0.92; }
+
+p { margin: 0 0 2em; }
+strong { font-weight: 600; }
+
+h1, h2 {
+  margin: 0 0 1em;
+  font-weight: 800;
+  letter-spacing: 0.225em;
+  line-height: 1em;
+  text-transform: uppercase;
+}
+h2 { font-size: 1.35em; line-height: 1.75em; }
+
+/* Background image */
+body.landing {
+  background-image: url("../Images/bg.png");
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* Optional video support (if you use it) */
+#videoBackground {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+/* Dim overlay for readability */
+body.landing::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  z-index: -1;
+}
+
+#page-wrapper { min-height: 100vh; }
+
+/* Header */
+:root{
+  --header-h: 4.25rem;
+  --safe-top: 0px; /* you can tweak if needed */
+}
+
+.TITLE{
+  position: fixed;
+  top: 0;
+  left: -60rem;
+  right: 0;
+  height: var(--header-height);
+  min-height: var(--header-height);
+  z-index: 50000;               /* above everything */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* subtle glass bar behind the logo */
+  background: rgba(0,0,0,0.18);
+  backdrop-filter: blur(10px);
+
+}
+/* Fixed header bar that holds ONLY the DHMO logo/title */
+#header{
+  position: fixed;
+  top: 0;
+  left: -60rem;
+  right: 0;
+  height: var(--header-height);
+  min-height: var(--header-height);
+  z-index: 50000;               /* above everything */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* subtle glass bar behind the logo */
+  background: rgba(0,0,0,0.18);
+  backdrop-filter: blur(10px);
+}
+#subheader {
+	  position: fixed;
+	  top: -2.34rem;
+	  left: 0;
+	  right: 0;
+	  height: var(--header-h);
+  text-align: right;
+  margin: 0;
+  font-size: 0.8em;
+  color: rgba(233,238,242,0.65);
+}
+
+/* Centered DHMO logo/title box */
+#header h1{
+  margin: 0;
+}
+
+#header h1 a{
+  display: inline-block;
+  padding: 0.6rem 1.25rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(0,0,0,0.35);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+  opacity: 0.3;
+
+
+  font-weight: 800;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  font-size: clamp(1.8rem, 2.6vw, 3.2rem);
+  line-height: 1;
+
+  border-bottom: 0; /* kill dotted underline from global link styles */
+}
+
+/* IMPORTANT: prevent page content from sliding under the fixed header */
+body{
+  padding-top: calc(var(--header-h) + var(--safe-top));
+}
+
+/* Your menus should start under the header too */
+.menu-box,
+.menu2-box{
+  top: calc(var(--header-h) + 1rem);
+}
+
+/* Optional: if you also have the in-page "DHMO" (banner h2), hide it */
+.maintext h2{
+  display: none;
+}
+
+
+
+/* REMOVE the empty rectangle (this is the culprit) */
+.menuToggle { display: none !important; }
+
+/* =========================
+   Two small corner menus
+   ========================= */
+
+/* Common box look (small + readable) */
+.menu-box,
+.menu2-box {
+  position: fixed;
+  top: 4.25rem;                 /* ⬅ pushes menus down a bit */
+  bottom: 1.5rem;               /* ⬅ makes them stretch downward */
+  width: clamp(220px, 18vw, 320px);
+  z-index: 15000;
+
+  padding: 1.1rem 1.15rem;
+  overflow-y: auto;             /* scroll inside if content exceeds height */
+
+  background: rgba(0, 0, 0, 0.38);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 12px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.45);
+
+  font-size: 0.62rem;
+  line-height: 1.45;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  overflow: hidden;
+}
+
+/* Left / right placement */
+.menu-box  { left: 1rem; }
+.menu2-box { right: 1rem; }
+
+/* Kill any inner “panel” sizing that tries to blow it up */
+#menu,
+#menu2 {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+/* Menu typography */
+.menu-box,
+.menu2-box {
+  font-size: 0.62rem;                  /* small but readable */
+  line-height: 1.45;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Titles inside the menus */
+.menu-box .section-title,
+.menu2-box .section-title {
+  margin: 0 0 0.75rem;
+  text-align: left;
+  font-size: 0.78rem;
+  letter-spacing: 0.22em;
+}
+
+/* Lists */
+.menu-box ul,
+.menu2-box ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu-box li,
+.menu2-box li { margin: 0.45em 0; }
+
+.menu-box a,
+.menu2-box a {
+  border: 0;
+  display: inline-block;
+  opacity: 0.95;
+}
+.menu-box a:hover,
+.menu2-box a:hover { opacity: 1; }
+
+/* Dividers in menu */
+.divider {
+  border: 0;
+  border-bottom: 1px solid rgba(255,255,255,0.28);
+  margin: 0.85rem 0;
+  opacity: 0.9;
+}
+
+/* “NEW” badge style if you keep it */
+.badge-new {
+  color: #ff5d5d;
+  font-weight: 800;
+  margin-left: 0.4rem;
+}
+
+/* Press kit bits */
+.press-only { color: #ff5d5d; font-weight: 800; }
+.credentials { margin-top: 0.35rem; }
+.credentials div { margin: 0.2rem 0; }
+
+/* Alert form — keep it compact */
+.alert-form {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+}
+.alert-form input[type="email"] {
+  width: 100%;
+  padding: 0.45rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(0,0,0,0.35);
+  color: #e9eef2;
+  outline: none;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: none;
+}
+.alert-form button {
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.10);
+  color: #e9eef2;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  cursor: pointer;
+}
+.alert-form button:hover { background: rgba(255,255,255,0.16); }
+
+/* Sponsors inside right menu (don’t let them explode the box) */
+.sponsors { display: grid; gap: 0.8rem; margin-top: 0.7rem; }
+.sponsors img { max-width: 100%; height: auto; display: block; }
+
+/* =========================
+   Main banner / center text
+   ========================= */
+#banner {
+  min-height: calc(100vh - var(--header-height));
+  padding-top: calc(var(--header-height) + 2rem);
+  padding-bottom: 4rem;
+  overflow: hidden; /* critical */
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  /* IMPORTANT: reserve space so center text doesn’t collide with menus */
+  padding: 7em 1.5rem 4rem;
+}
+
+.maintext {
+  max-width: 60ch;
+  margin: 0 auto;
+
+  max-height: calc(100vh - var(--header-height) - 4rem);
+  overflow-y: auto;
+  overscroll-behavior: contain; /* prevents rubber-band overscroll */
+
+  padding: 2rem 2rem 3rem;
+}
+
+.dropcap {
+  float: left;
+  font-size: 3.2em;        /* slightly larger for authority */
+  line-height: 0.09;         /* IMPORTANT: match text rhythm */
+  padding-right: -0.5em;  /* breathing room */
+  padding-top: 0.1em;     /* nudges it DOWN into alignment */
+  font-weight: 800;
+}
+
+.highlight { border-bottom-style: solid; }
+
+.smallprint { font-size: 0.85em; opacity: 0.85; }
+
+/* Responsive */
+@media (max-width: 980px) {
+  /* On narrower screens, keep menus small + readable */
+  .menu-box,
+  .menu2-box { width: clamp(200px, 28vw, 300px); }
+}
+
+@media (max-width: 736px) {
+  body { font-size: 11pt; letter-spacing: 0.0375em; }
+  h2 { font-size: 1.1em; }
+  #banner { padding-top: 7em; }
+
+  /* Stack menus vertically if space is tight */
+  .menu-box, .menu2-box {
+    width: min(92vw, 360px);
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+  }
+  .menu2-box { top: 10.5rem; } /* drops under menu 1 */
+}
